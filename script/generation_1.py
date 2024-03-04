@@ -24,7 +24,7 @@ def prompt_formatting(
     Format prompt to include document and seed topics
     Handle cases where prompt is too long
     - generation_prompt: Prompt for topic generation
-    - deployment_name: Model to run generation with ('gpt-4', 'gpt-35-turbo', 'mistral-7b-instruct')
+    - deployment_name: Model to run generation with ('gpt-4-0125-preview', 'gpt-35-turbo', 'mistral-7b-instruct')
     - doc: Document to include in prompt
     - seed_file: File to read seed topics from
     - topics_list: List of topics generated from previous iteration
@@ -102,7 +102,7 @@ def generate_topics(
     - context_len: Max length of prompt
     - docs: List of documents to generate topics from
     - seed_file: File to read seed topics from
-    - deployment_name: Model to run generation with ('gpt-4', 'gpt-35-turbo', 'mistral-7b-instruct)
+    - deployment_name: Model to run generation with ('gpt-4-0125-preview', 'gpt-35-turbo', 'mistral-7b-instruct)
     - generation_prompt: Prompt to generate topics with
     - verbose: Whether to print out results
     - early_stop: Threshold for topic drought (Modify if necessary)
@@ -172,7 +172,7 @@ def main():
     parser.add_argument(
         "--deployment_name",
         type=str,
-        help="model to run topic generation with ('gpt-4', 'gpt-35-turbo', 'mistral-7b-instruct)",
+        help="model to run topic generation with ('gpt-4-0125-preview', 'gpt-35-turbo', 'mistral-7b-instruct)",
     )
     parser.add_argument(
         "--max_tokens", type=int, default=500, help="max tokens to generate"
@@ -226,7 +226,7 @@ def main():
     context = 4096
     if deployment_name == "gpt-35-turbo":
         deployment_name = "gpt-3.5-turbo"
-    if deployment_name == "gpt-4":
+    if deployment_name == "gpt-4-0125-preview":
         context = 8000
     context_len = context - max_tokens
 
