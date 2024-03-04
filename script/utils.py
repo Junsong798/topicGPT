@@ -25,13 +25,13 @@ def api_call(prompt, deployment_name, temperature, max_tokens, top_p):
     """
     Call API (OpenAI, Azure, Perplexity) and return response
     - prompt: prompt template
-    - deployment_name: name of the deployment to use (e.g. gpt-4, gpt-3.5-turbo, etc.)
+    - deployment_name: name of the deployment to use (e.g. gpt-4-0125-preview, gpt-3.5-turbo, etc.)
     - temperature: temperature parameter
     - max_tokens: max tokens parameter
     - top_p: top p parameter
     """
     time.sleep(5)  # Change to avoid rate limit
-    if deployment_name in ["gpt-35-turbo", "gpt-4", "gpt-3.5-turbo"]:
+    if deployment_name in ["gpt-35-turbo", "gpt-4-0125-preview", "gpt-3.5-turbo"]:
         response = client.chat.completions.create(
             model=deployment_name,
             temperature=float(temperature),
@@ -95,7 +95,7 @@ def num_tokens_from_messages(messages, model):
             encoding = tiktoken.encoding_for_model(model)
         except KeyError:
             encoding = tiktoken.get_encoding("cl100k_base")
-        if model in ["gpt-35-turbo", "gpt-4", "gpt4-32k", "gpt-3.5-turbo"]:
+        if model in ["gpt-35-turbo", "gpt-4-0125-preview", "gpt4-32k", "gpt-3.5-turbo"]:
             tokens_per_message = 3
             tokens_per_name = 1
         elif model == "gpt-3.5-turbo-0301":
@@ -368,18 +368,18 @@ def construct_document(docs, context_len):
     i = 0
     doc_str, doc_prompt = "", []
     while i < len(docs):
-        if num_tokens_from_messages(docs[i], "gpt-4") < context_len // 5:
+        if num_tokens_from_messages(docs[i], "gpt-4-0125-preview") < context_len // 5:
             to_add = f"Document {i+1}\n" + " ".join(docs[i].split("\n")) + "\n"
         else:
             to_add = (
                 f"Document {i+1}\n"
-                + truncating(docs[i], "gpt-4", context_len // 5)
+                + truncating(docs[i], "gpt-4-0125-preview", context_len // 5)
                 + "\n"
             )
             print(
-                f"Truncating {num_tokens_from_messages(docs[i], 'gpt-4')} to {context_len//5}...."
+                f"Truncating {num_tokens_from_messages(docs[i], 'gpt-4-0125-preview')} to {context_len//5}...."
             )
-        if (num_tokens_from_messages(doc_str + to_add, "gpt-4")) >= context_len:
+        if (num_tokens_from_messages(doc_str + to_add, "gpt-4-0125-preview")) >= context_len:
             doc_prompt.append(doc_str)
             doc_str = ""
         doc_str += to_add
