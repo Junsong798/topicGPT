@@ -149,7 +149,7 @@ def generate_topics(
                                 count=1,
                                 desc=desc,
                             )
-                            topics_list.append(f"[{new_node.lvl}] {new_node.name}")
+                            topics_list.append(f"[{new_node.lvl}] {new_node.name}: {new_node.desc}") # add descriptions
                             running_dups = 0
                     else:
                         if verbose:
