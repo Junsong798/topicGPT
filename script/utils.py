@@ -37,7 +37,7 @@ def api_call(prompt, deployment_name, temperature, max_tokens, top_p):
             temperature=float(temperature),
             max_tokens=int(max_tokens),
             top_p=float(top_p),
-            seed=111,
+            seed=42,
             messages=[
                 {"role": "system", "content": ""},
                 {"role": "user", "content": prompt},
